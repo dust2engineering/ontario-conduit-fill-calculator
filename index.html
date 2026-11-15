@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ontario Conduit Fill Calculator | Dust 2 Engineering Inc.</title>
+<style>
+:root{color-scheme:dark}
+body{background:#0e1116;color:#e6e9ee;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;margin:0;padding:24px;line-height:1.55}
+.wrap{max-width:860px;margin:0 auto}
+h1{font-size:1.55rem;line-height:1.25;margin:.2em 0 .1em}
+h2{font-size:1.15rem;margin-top:1.6em;color:#ffd479}
+.sub{color:#9fb0c3;margin:.2em 0 1.2em}
+.card{background:#161b22;border:1px solid #2b333f;border-radius:12px;padding:18px;margin:14px 0}
+label{display:block;margin:.7em 0 .25em;color:#c8d3e0;font-size:.95rem}
+input,select{width:100%;box-sizing:border-box;background:#0e1116;color:#e6e9ee;border:1px solid #39424f;border-radius:8px;padding:9px;font-size:1rem}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:640px){.row{grid-template-columns:1fr}}
+button{background:#f0a832;color:#14100a;border:0;border-radius:8px;padding:11px 18px;font-size:1rem;font-weight:600;cursor:pointer;margin-top:14px}
+pre{background:#0a0d11;border:1px solid #2b333f;border-radius:10px;padding:14px;white-space:pre-wrap;word-break:break-word;font-size:.92rem}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{border:1px solid #2b333f;padding:6px 8px;text-align:left}
+th{background:#1b212b}
+.small{color:#9fb0c3;font-size:.88rem}
+a{color:#7cc4ff}
+.pass{color:#7ee2a0}.fail{color:#ff9c9c}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Ontario Conduit Fill Calculator</h1>
+<p class="sub">Conductor area vs conduit capacity — CEC Rule 12-910, Tables 8, 6A and 9 (RW90 conductors).</p>
+<div class="card">
+<div class="row"><div><label>Conductor group 1 — size</label><select id="s1"><option>14 AWG</option><option>12 AWG</option><option>10 AWG</option><option>8 AWG</option><option>6 AWG</option><option>4 AWG</option><option>3 AWG</option><option>2 AWG</option><option>1 AWG</option><option>1/0 AWG</option><option>2/0 AWG</option><option>3/0 AWG</option><option>4/0 AWG</option><option>250 kcmil</option><option>300 kcmil</option><option>350 kcmil</option><option>400 kcmil</option></select></div><div><label>Count</label><input id="n1" type="number" value="3" min="0"></div></div><div class="row"><div><label>Conductor group 2 — size</label><select id="s2"><option>14 AWG</option><option>12 AWG</option><option>10 AWG</option><option>8 AWG</option><option>6 AWG</option><option>4 AWG</option><option>3 AWG</option><option>2 AWG</option><option>1 AWG</option><option>1/0 AWG</option><option>2/0 AWG</option><option>3/0 AWG</option><option>4/0 AWG</option><option>250 kcmil</option><option>300 kcmil</option><option>350 kcmil</option><option>400 kcmil</option></select></div><div><label>Count</label><input id="n2" type="number" value="0" min="0"></div></div><div class="row"><div><label>Conductor group 3 — size</label><select id="s3"><option>14 AWG</option><option>12 AWG</option><option>10 AWG</option><option>8 AWG</option><option>6 AWG</option><option>4 AWG</option><option>3 AWG</option><option>2 AWG</option><option>1 AWG</option><option>1/0 AWG</option><option>2/0 AWG</option><option>3/0 AWG</option><option>4/0 AWG</option><option>250 kcmil</option><option>300 kcmil</option><option>350 kcmil</option><option>400 kcmil</option></select></div><div><label>Count</label><input id="n3" type="number" value="0" min="0"></div></div>
+<button onclick="calc()">Check conduit fill</button>
+<pre id="out">Enter the conductors.</pre>
+</div>
+<div class="card"><h2>Basis and scope</h2>
+<p>CEC Rule 12-910 with Table 8 fill limits (1 conductor 53%, 2 conductors 31%,
+3 or more 40%) and RW90 conductor areas from Table 6A. Conduit areas are the CEC
+Table 9-series values, published at the 40% level; totals for the 53%/31% cases are
+derived from them. EMT is limited to the publicly verifiable trade sizes
+(21, 27, 41, 63 mm); rigid PVC is the full range. Short nipples up to 600 mm may be
+filled to 60%.</p></div>
+<p class="small">Free tool by <b>Dust 2 Engineering Inc.</b>, Mississauga, Ontario — building permit
+drawings for restaurants and small commercial projects across the GTA, stamped by an Ontario P.Eng.
+Flat rate $3,500–$5,000. Questions or a project to discuss: open an issue in this repository.</p>
+</div>
+<script>
+
+const DATA = {"conductor_areas_mm2_rw90": {"14 AWG": 8.89, "12 AWG": 11.61, "10 AWG": 15.67, "8 AWG": 28.17, "6 AWG": 37.98, "4 AWG": 52.46, "3 AWG": 61.99, "2 AWG": 73.85, "1 AWG": 99.1, "1/0 AWG": 118.3, "2/0 AWG": 141.9, "3/0 AWG": 170.6, "4/0 AWG": 206.4, "250 kcmil": 251.8, "300 kcmil": 292.6, "350 kcmil": 331.0, "400 kcmil": 373.0}, "fill_percent_limits": {"1 conductor": 53, "2 conductors": 31, "3 or more conductors": 40, "note": "CEC Table 8, not lead-sheathed. Short nipples not over 600 mm may be filled to 60% (Rule 12-910)."}, "conduit_usable_area_at_40_percent_mm2": {"EMT": {"21 mm (3/4 in)": 132.03, "27 mm (1 in)": 215.65, "41 mm (1-1/2 in)": 515.3, "63 mm (2-1/2 in)": 1513.1}, "Rigid PVC": {"16 mm (1/2 in)": 66.69, "21 mm (3/4 in)": 122.79, "27 mm (1 in)": 202.68, "35 mm (1-1/4 in)": 316.69, "41 mm (1-1/2 in)": 456.04, "53 mm (2 in)": 810.73, "63 mm (2-1/2 in)": 1180.51, "78 mm (3 in)": 1824.15, "91 mm (3-1/2 in)": 2455.02, "103 mm (4 in)": 3147.88, "129 mm (5 in)": 4975.72, "155 mm (6 in)": 7045.04}, "ENT": {"16 mm (1/2 in)": 66.78, "21 mm (3/4 in)": 121.43, "27 mm (1 in)": 202.2, "35 mm (1-1/4 in)": 357.42, "41 mm (1-1/2 in)": 491.91, "53 mm (2 in)": 822.91}}, "conduit_total_internal_area_mm2_derived": {"EMT": {"21 mm (3/4 in)": 330.07, "27 mm (1 in)": 539.12, "41 mm (1-1/2 in)": 1288.25, "63 mm (2-1/2 in)": 3782.75}, "Rigid PVC": {"16 mm (1/2 in)": 166.72, "21 mm (3/4 in)": 306.98, "27 mm (1 in)": 506.7, "35 mm (1-1/4 in)": 791.72, "41 mm (1-1/2 in)": 1140.1, "53 mm (2 in)": 2026.83, "63 mm (2-1/2 in)": 2951.27, "78 mm (3 in)": 4560.38, "91 mm (3-1/2 in)": 6137.55, "103 mm (4 in)": 7869.7, "129 mm (5 in)": 12439.3, "155 mm (6 in)": 17612.6}, "ENT": {"16 mm (1/2 in)": 166.95, "21 mm (3/4 in)": 303.57, "27 mm (1 in)": 505.5, "35 mm (1-1/4 in)": 893.55, "41 mm (1-1/2 in)": 1229.78, "53 mm (2 in)": 2057.27}}, "derivation_note": "Total internal areas are derived from the published 40%-fill areas (value / 0.40) so the 53% and 31% limits for 1-2 conductors can be applied; at 3+ conductors the published 40% values govern directly.", "scope_note": "EMT sizes are limited to the trade sizes whose CEC Table 9 values were publicly verifiable (21, 27, 41, 63 mm). Rigid PVC is the full published range; ENT is partial. Conductor areas are RW90 XLPE 600 V unjacketed (CEC Table 6A); other insulation types have different areas.", "source": "CEC (CSA C22.1) Rule 12-910, Table 8, Table 6A, Table 9 series, via published reproductions cross-checked 2026-11-15"};
+function calc(){
+  let total=0, count=0, s='';
+  for(const i of [1,2,3]){
+    const n=+document.getElementById('n'+i).value||0; if(!n) continue;
+    const sz=document.getElementById('s'+i).value, a=DATA.conductor_areas_mm2_rw90[sz];
+    total+=a*n; count+=n; s+='  '+n+' x '+sz+': '+a+' mm2 each = '+(a*n).toFixed(2)+' mm2\n';
+  }
+  if(!count){ document.getElementById('out').textContent='Enter at least one conductor.'; return; }
+  const limit = count===1?53 : count===2?31 : 40;
+  s+='Total conductor area '+total.toFixed(2)+' mm2; '+count+' conductors -> fill limit '+limit+'%\n';
+  const totals=DATA.conduit_total_internal_area_mm2_derived;
+  for(const ctype in totals){
+    let found=null;
+    for(const sname in totals[ctype]){ const fill=100*total/totals[ctype][sname];
+      if(fill<=limit){ found=[sname, fill]; break; } }
+    s+= found ? 'RESULT '+ctype+': smallest verified size '+found[0]+' — fill '+found[1].toFixed(1)+'% (limit '+limit+'%)\n'
+              : 'RESULT '+ctype+': no verified size in this tool is large enough\n';
+  }
+  document.getElementById('out').textContent=s;
+}
+
+</script>
+</body>
+</html>

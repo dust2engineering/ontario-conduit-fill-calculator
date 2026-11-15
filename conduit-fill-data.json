@@ -1,0 +1,90 @@
+{
+  "conductor_areas_mm2_rw90": {
+    "14 AWG": 8.89,
+    "12 AWG": 11.61,
+    "10 AWG": 15.67,
+    "8 AWG": 28.17,
+    "6 AWG": 37.98,
+    "4 AWG": 52.46,
+    "3 AWG": 61.99,
+    "2 AWG": 73.85,
+    "1 AWG": 99.1,
+    "1/0 AWG": 118.3,
+    "2/0 AWG": 141.9,
+    "3/0 AWG": 170.6,
+    "4/0 AWG": 206.4,
+    "250 kcmil": 251.8,
+    "300 kcmil": 292.6,
+    "350 kcmil": 331.0,
+    "400 kcmil": 373.0
+  },
+  "fill_percent_limits": {
+    "1 conductor": 53,
+    "2 conductors": 31,
+    "3 or more conductors": 40,
+    "note": "CEC Table 8, not lead-sheathed. Short nipples not over 600 mm may be filled to 60% (Rule 12-910)."
+  },
+  "conduit_usable_area_at_40_percent_mm2": {
+    "EMT": {
+      "21 mm (3/4 in)": 132.03,
+      "27 mm (1 in)": 215.65,
+      "41 mm (1-1/2 in)": 515.3,
+      "63 mm (2-1/2 in)": 1513.1
+    },
+    "Rigid PVC": {
+      "16 mm (1/2 in)": 66.69,
+      "21 mm (3/4 in)": 122.79,
+      "27 mm (1 in)": 202.68,
+      "35 mm (1-1/4 in)": 316.69,
+      "41 mm (1-1/2 in)": 456.04,
+      "53 mm (2 in)": 810.73,
+      "63 mm (2-1/2 in)": 1180.51,
+      "78 mm (3 in)": 1824.15,
+      "91 mm (3-1/2 in)": 2455.02,
+      "103 mm (4 in)": 3147.88,
+      "129 mm (5 in)": 4975.72,
+      "155 mm (6 in)": 7045.04
+    },
+    "ENT": {
+      "16 mm (1/2 in)": 66.78,
+      "21 mm (3/4 in)": 121.43,
+      "27 mm (1 in)": 202.2,
+      "35 mm (1-1/4 in)": 357.42,
+      "41 mm (1-1/2 in)": 491.91,
+      "53 mm (2 in)": 822.91
+    }
+  },
+  "conduit_total_internal_area_mm2_derived": {
+    "EMT": {
+      "21 mm (3/4 in)": 330.07,
+      "27 mm (1 in)": 539.12,
+      "41 mm (1-1/2 in)": 1288.25,
+      "63 mm (2-1/2 in)": 3782.75
+    },
+    "Rigid PVC": {
+      "16 mm (1/2 in)": 166.72,
+      "21 mm (3/4 in)": 306.98,
+      "27 mm (1 in)": 506.7,
+      "35 mm (1-1/4 in)": 791.72,
+      "41 mm (1-1/2 in)": 1140.1,
+      "53 mm (2 in)": 2026.83,
+      "63 mm (2-1/2 in)": 2951.27,
+      "78 mm (3 in)": 4560.38,
+      "91 mm (3-1/2 in)": 6137.55,
+      "103 mm (4 in)": 7869.7,
+      "129 mm (5 in)": 12439.3,
+      "155 mm (6 in)": 17612.6
+    },
+    "ENT": {
+      "16 mm (1/2 in)": 166.95,
+      "21 mm (3/4 in)": 303.57,
+      "27 mm (1 in)": 505.5,
+      "35 mm (1-1/4 in)": 893.55,
+      "41 mm (1-1/2 in)": 1229.78,
+      "53 mm (2 in)": 2057.27
+    }
+  },
+  "derivation_note": "Total internal areas are derived from the published 40%-fill areas (value / 0.40) so the 53% and 31% limits for 1-2 conductors can be applied; at 3+ conductors the published 40% values govern directly.",
+  "scope_note": "EMT sizes are limited to the trade sizes whose CEC Table 9 values were publicly verifiable (21, 27, 41, 63 mm). Rigid PVC is the full published range; ENT is partial. Conductor areas are RW90 XLPE 600 V unjacketed (CEC Table 6A); other insulation types have different areas.",
+  "source": "CEC (CSA C22.1) Rule 12-910, Table 8, Table 6A, Table 9 series, via published reproductions cross-checked 2026-11-15"
+}
